@@ -13,7 +13,7 @@ const createNotesController = async(req,res)=>
       })
   } catch (error) {
     return res.status(500).json({
-      message:"Internal server error",
+      message:"Bhai mai nai chal ga",
     }) 
   }
 }
@@ -78,11 +78,32 @@ const deleteNoteController = async(req,res)=>
     })
   }
 }
+const singleEntityUpdaeController = async(req,res)=>
+{
+  try {
+    let noteId = req.params.id;
+    let body = req.body;
+
+    let updatedNode = await NotesModel.findByIdAndUpdate(noteId,body,{new:true})
+      return res.status(200).json({
+      message:"Note Updated Successfully.",
+      data:updatedNode
+    })
+  } catch (error) {
+    res.status(500).json({
+      message:"Internal server error"
+    })
+
+    
+  }
+}
+
   
 module.exports = {
   createNotesController
   ,getAllNotesController,
   getSingleNoteController,
   updateNotesController,
-  deleteNoteController
+  deleteNoteController,
+  singleEntityUpdaeController
 } 
